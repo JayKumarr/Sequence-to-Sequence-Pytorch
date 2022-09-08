@@ -89,7 +89,7 @@ class MyLSTM(nn.Module):
 
         if device is None:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    def forward(self, x, target_future_samples = 0):
+    def forward(self, x):
 
         h_0 = torch.zeros(self.n_layers, self.timesteps, self.hidden_size, dtype=torch.float64).to(device)  # hidden state
         c_0 = torch.zeros(self.n_layers, self.timesteps, self.hidden_size, dtype=torch.float64).to(device)  # internal state
@@ -97,12 +97,6 @@ class MyLSTM(nn.Module):
 
         out = self.fc(output[:,-1,:])
 
-        # for i in range(target_future_samples):
-        #     hn, cn = self.rnnn(output, (hn, cn))
-        #     out = self.fc(output[:,-1,:])
-        #     outputs.append(output)
-        #
-        # outputs = torch.cat(outputs, dim=self.input_size)
 
         return out, hn
 
